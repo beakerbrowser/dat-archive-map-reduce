@@ -83,8 +83,7 @@ await damr.get('site-posts-count', 'dat://pfrazee.com')
   - [damr.define(name, definition)](#damrdefinename-definition)
   - [damr.reset(view)](#damrresetview)
   - [damr.get(view, key)](#damrgetview-key)
-  - [damr.list(view, key)](#damrlistview-key)
-  - [damr.count(view)](#damrcountview)
+  - [damr.list(view, opts)](#damrlistview-opts)
   - [damr.index(url[, opts])](#damrindexurl-opts)
   - [damr.unindex(url)](#damrunindexurl)
   - [damr.indexFile(archive, filepath)](#damrindexfilearchive-filepath)
@@ -96,15 +95,12 @@ await damr.get('site-posts-count', 'dat://pfrazee.com')
   - [Event: 'open'](#event-open)
   - [Event: 'open-failed'](#event-open-failed)
   - [Event: 'view-reset'](#event-view-reset)
-  - [Event: 'view-updated'](#event-view-updated)
   - [Event: 'archive-indexing'](#event-archive-indexing)
   - [Event: 'archive-index-progress'](#event-archive-index-progress)
   - [Event: 'archive-indexed'](#event-archive-indexed)
   - [Event: 'archive-missing'](#event-archive-missing)
   - [Event: 'archive-found'](#event-archive-found)
   - [Event: 'archive-error'](#event-archive-error)
-  - [Event: 'put-entry'](#event-put-entry)
-  - [Event: 'del-entry'](#event-del-entry)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -236,45 +232,30 @@ Get the entry at the given key.
 ```js
 // list the most recent 30 posts by pfrazee.com
 await damr.list('site-posts-by-date', {
-  from: ['dat://pfrazee.com', 0],
-  to: ['dat://pfrazee.com', Infinity],
+  gte: ['dat://pfrazee.com', 0],
+  lte: ['dat://pfrazee.com', Infinity],
   limit: 30,
   reverse: true
 })
 // list the posts in the last 5 days by mafintosh.com
 await damr.list('site-posts-by-date', {
-  from: ['dat://mafintosh.com', Date.now() - ms('5d')],
-  to: ['dat://mafintosh.com', Date.now()],
+  gte: ['dat://mafintosh.com', Date.now() - ms('5d')],
+  lte: ['dat://mafintosh.com', Date.now()],
   reverse: true
 })
 ```
 
  - `view` String. The name of the view to query.
  - `opts` Object.
-   - `from` Any. The start key in the range to query.
-   - `to` Any. The end key in the range to query.
+   - `gt` Any. The start key in the range to query (exclusive).
+   - `gte` Any. The start key in the range to query (inclusive).
+   - `lt` Any. The end key in the range to query (exclusive).
+   - `lte` Any. The end key in the range to query (inclusive).
    - `reverse` Boolean. Reverse the order of the output? Defaults to false.
    - `limit` Number. Limit the number of entries returned. Defaults to no limit.
  - Returns Promise&lt;Array&lt;Any&gt;&gt;.
 
 List a range of entries from a view.
-
-### damr.count(view, opts)
-
-```js
-var numEntries = await damr.count('site-posts-by-date', {
-  from: ['dat://pfrazee.com', 0],
-  to: ['dat://pfrazee.com', Infinity]
-})
-```
-
- - `view` String. The name of the view to query.
- - `opts` Object.
-   - `from` Any. The start key in the range to query.
-   - `to` Any. The end key in the range to query.
- - Returns Promise&lt;Number&gt;.
-
-Count the number of entries in the view.
 
 ### damr.index(url[, opts])
 
