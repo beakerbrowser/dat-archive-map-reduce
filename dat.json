@@ -1,0 +1,7 @@
+{
+  "title": "dat-archive-map-reduce.js",
+  "description": "Index files in Dat archives to create queryable data views.",
+  "type": [
+    ""
+  ]
+}
