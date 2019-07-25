@@ -223,7 +223,9 @@ var post = await damr.get('site-posts-by-date', ['dat://pfrazee.com', Number(new
 
  - `view` String. The name of the view to query.
  - `key` Any. The key of the entry to fetch.
- - Returns Promise&lt;Any&gt;.
+ - Returns Promise&lt;Object&gt;.
+   - `key` Any. The key of the entry.
+   - `value` Any. The value of the entry.
 
 Get the entry at the given key.
 
@@ -253,7 +255,9 @@ await damr.list('site-posts-by-date', {
    - `lte` Any. The end key in the range to query (inclusive).
    - `reverse` Boolean. Reverse the order of the output? Defaults to false.
    - `limit` Number. Limit the number of entries returned. Defaults to no limit.
- - Returns Promise&lt;Array&lt;Any&gt;&gt;.
+ - Returns Promise&lt;Array&lt;Object&gt;&gt;.
+   - `key` Any. The key of the entry.
+   - `value` Any. The value of the entry.
 
 List a range of entries from a view.
 
